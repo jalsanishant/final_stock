@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+        <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <!--<script type="text/javascript" src="http://code.highcharts.com/highcharts.js"></script>-->
+
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script type="text/javascript">
+            google.load("visualization", "1", {packages:["corechart"]});
+        </script>
+
+        <link rel="shortcut icon" href="/static/favicon.ico" />
+        <title>({[:=-=:]})</title>
+        <style type="text/css">
+html, body {
+    font-family: Verdana, sans-serif;
+    font-size: 0.85em;
+    padding: 0;
+    margin: 0 auto;
+    color: #333;
+    height: 100%;
+}
+#container {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -50px;
+    background-color: #9DBED9;
+    background-color: #AAC2D9;
+}
+
+#header {
+    color: #bbb;
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-size: 1em;
+    border-bottom: 2px solid black;
+    background-color: #2E3E40;
+}
+#header a {
+    color: #F2F2F2;
+    text-decoration: none;
+    font-size: 1.7em;
+    padding: 1em;
+}
+
+#search {
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+input[type="text"] {
+    border: 1px solid;
+    font-family: inherit;
+    font-size: 28px;
+    padding: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+input[type="submit"] {
+    border: 1px solid;
+    font-size: 28px;
+    font-family: inherit;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+#content {
+    padding-top: 15px;
+}
+.content_block {
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-bottom: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 1px solid black;
+    background-color: #F2F2F2;
+    color: #000;
+}
+
+#hackspace { height: 50px; }
+#footer {
+    height: 50px;
+    text-align: center;
+    color: #aaa;
+}
+#footer a {
+    color: #000;
+    text-decoration: none;
+    font-size: 1em;
+}
+        </style>
+        <script type="text/javascript">
+            function clearBox(x) {
+                if (x.value == "Enter stock symbol...") {
+                    x.value = "";
+                }
+            }
+            function resetBox(x) {
+                if (x.value == "") {
+                    x.value = "Enter stock symbol...";
+                }
+            }
+        </script>
+  
+    </head>
+    <body>
+        <div id="container">
+            <div id="header">
+                <a href="/leaders/">Showing Leaderboard</a>
+                &mdash;
+                <a href="/">Home</a>
+            </div>
+
+            <div id="search">
+                <form action="/search/" method="post">
+                    <input type="text" value="Enter stock symbol..." name="q" id="searchbox" onfocus="clearBox(this);" onblur="resetBox(this);" />
+                    <input type="submit" value="Search" id="searchsubmit" />
+                </form>
+            </div>
+            
+            <div id="content">
+                {% if error %}
+                <div class="content_block">
+                    Error: {{ error }}
+                </div>
+                {% endif %}
+                {% if portfolios %}
+                <div class="content_block">
+                    Current Rankings:
+                    <ol>
+                    {% for p in portfolios %}
+                        <li>{{ p.user.username}} has ${{ p.value }} with ${{ p.balance }} left to spend</li>
+                    {% endfor %}
+                    </ol>
+                </div>
+                {% else %}
+                <div class="content_block">
+                    It doesn't look like anyone has signed up.
+                </div>
+                {% endif %}
+            <div>
+            {{ point_chart.as_html }}
+        </div>
+
+            <div id="footer">
+                <a href="/">Home</a>
+            </div>
+    </body>
+</html>

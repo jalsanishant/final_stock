@@ -1,0 +1,134 @@
+
+    {% extends 'base5.html' %}
+    {% block content %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-centered">
+                        <h2>Search For Stocks</h2>
+                            <div id="custom-search-input">
+                            <div class="input-group col-md-12">
+                            <form action="/search/" method="post">
+                            <input type="text" id="searchbox" name="q" class="form-control input-lg" placeholder="Stock Symbol" />
+                            </form>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Services Section -->
+    <section id="services">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">{{ stock.symbol }} trading on {{ stock.exchange }}</h2>
+                    <h3 class="section-subheading text-muted">Last Updated: {{ status.date }}</h3>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fa  fa-money fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="service-heading">Current Price</h4>
+                        <p class="text-muted">{{ stock.price }}</p>
+                </div>
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fa  fa-line-chart  fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="service-heading">Change</h4>
+                        <p class="text-muted">{{ status.change }}</p>
+                </div>
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fa  fa-pie-chart fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="service-heading">Volume</h4>
+                        <p class="text-muted">{{ status.volume }}</p>
+                </div>  
+            </div>
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fa  fa-pie-chart fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="service-heading">Average Daily Volume</h4>
+                        <p class="text-muted">{{ status.average_daily_volume }}</p>
+                </div>
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fa  fa-bar-chart fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="service-heading">Market Cap</h4>
+                        <p class="text-muted">{{ status.market_cap }}</p>
+                </div>
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fa  fa-usd fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="service-heading">Book Value</h4>
+                        <p class="text-muted">{{ status.book_value }}</p>
+                </div>  
+            </div>
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fa  fa-money fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="service-heading">Year High</h4>
+                        <p class="text-muted">{{ status.i52_week_high }}</p>
+                </div>
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fa  fa-money fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="service-heading">Year Low</h4>
+                        <p class="text-muted">{{ status.i52_week_low }}</p>
+                </div>
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fa  fa-area-chart fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="service-heading">EBITDA</h4>
+                        <p class="text-muted">{{ status.ebitda }}</p>
+                </div>  
+            </div>
+        </div>
+    </section>
+
+                <div class="content_block">
+                    <form action="/buy/" method="post">
+                        {% csrf_token %}
+                        <label for="buy_amt">Amount: </label>
+                        <input type="text" id="buy_amt" name="number_of_shares" />
+                        <input type="hidden" name="symbol" value="{{ stock.symbol }}" />
+                        <input type="submit" value="Buy" />
+                    </form>
+                </div>
+                <div class="content_block">
+                    <form action="/sell/" method="post">
+                        {% csrf_token %}
+                        <label for="sell_amt">Amount: </label>
+                        <input type="text" id="sell_amt" name="number_of_shares" />
+                        <input type="hidden" name="symbol" value="{{ stock.symbol }}" />
+                        <input type="submit" value="Sell" />
+                    </form>
+                </div>
+            <div>
+            <div id="hackspace"></div>
+        </div>
+
+
+    </body>
+    {% endblock %}
+

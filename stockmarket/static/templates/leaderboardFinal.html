@@ -1,0 +1,61 @@
+{% extends 'base1.html' %}
+
+{% block heading %}
+<!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Global Leaderboard</h1>
+        <p>See How You Stack Up!</p>
+      </div>
+    </div>
+{% endblock %}     
+
+{% block content %}
+<div class="row">
+{% if error %}
+<div class="content_block">
+Error: {{ error }}
+</div>
+{% endif %}
+{% if portfolios %}
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Current Rankings</h3>
+  </div>
+  <div class="panel-body">
+{% for p in portfolios %}
+<ul class="list-group">
+  <li class="list-group-item">
+    <span class="badge">${{ p.value }}</span>
+    {{ p.user.username}}
+  </li>
+</ul>
+{% endfor %}
+  </div>
+</div>
+{% else %}
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">It doesn't look like anyone has signed up!</h3>
+  </div>
+  <div class="panel-body">
+{% endif %}
+</div>
+<div class="container">
+<style type="text/css">
+.tab { margin-left: 220px; }
+</style>
+<script type = "text/javascript" src = "/static/js/jquery.js"></script>
+<script type = "text/javascript" src = "/static/js/flot/jquery.flot.js"></script>
+<script type = "text/javascript" src = "/static/js/flot/jquery.flot.time.js"></script>
+<script type = "text/javascript" src = "/static/js/flot/date.js"></script>
+<script type = "text/javascript" src = "/static/js/flot/jquery.flot.categories.js"></script>
+
+<div class="row">
+    <div class="col-md-2 col-md-offset-1">{{chart.as_html}}</div>
+</div>
+
+{% endblock %}	
+
+
+

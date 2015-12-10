@@ -1,0 +1,72 @@
+{% extends 'base1.html' %}
+
+
+{% block content %}
+
+        <script type="text/javascript">
+            function clearBox(x) {
+                if (x.value == "Enter stock symbol...") {
+                    x.value = "";
+                }
+            }
+            function resetBox(x) {
+                if (x.value == "") {
+                    x.value = "Enter stock symbol...";
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <div id="container">
+            
+            <div class="input-group input-group-lg" id = "search">
+                <form action="/search/" method="post">
+                    <span class="input-group-addon" id="sizing-addon1">Search</span>
+                    <input type="text" class="form-control" placeholder="Stock Symbol" aria-describedby="sizing-addon1">
+                    <input type="submit" value="Search" id="searchsubmit" />
+                </form>
+            </div>
+
+            <div id="search">
+                <form action="/search/" method="post">
+                    {% csrf_token %}
+                    <input type="text" value="Enter stock symbol..." name="q" id="searchbox" onfocus="clearBox(this);" onblur="resetBox(this);" />
+                    <input type="submit" value="Search" id="searchsubmit" />
+                </form>
+            </div>
+            
+            <div id="content">
+                {% if error %}
+                <div class="content_block">
+                    Error: {{ error }}
+                </div>
+                {% endif %}
+                <div class="content_block">
+                    Create an account
+                    <form action="/register/" method="post">{% csrf_token %}
+                        <label for="uname">Username: </label>
+                        <input type="text" id="uname" name="username" />
+                        <label for="pword">Password: </label>
+                        <input type="password" id="pword" name="password" />
+                        <input type="submit" value="Register" />
+                    </form>
+                </div>
+                <div class="content_block">
+                    Login to your account
+                    <form action="/login/" method="post">
+                        {% csrf_token %}
+                        <label for="uname">Username: </label>
+                        <input type="text" id="uname" name="username" />
+                        <label for="pword">Password: </label>
+                        <input type="password" id="pword" name="password" />
+                        <input type="submit" value="Login" />
+                    </form>
+                </div>
+            <div>
+            <div id="hackspace"></div>
+        </div>
+
+            <div id="footer">
+                <a href="/">Home</a>
+            </div>
+{% endblock %}     

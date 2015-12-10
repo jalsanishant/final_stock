@@ -1,0 +1,107 @@
+{% extends 'base1.html' %}
+{% block content %}
+
+ <body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 text-centered">
+            <h2>Search For Stocks</h2>
+            <div id="custom-search-input">
+                <div class="input-group col-md-12">
+                    <form action="/search/" method="post">
+                    <input type="text" id="searchbox" name="q" class="form-control input-lg" placeholder="Stock Symbol" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-xs-12" style="height:50px;"></div>
+ <!-- Services Section -->
+    <section id="services">
+        <div class="container">
+            
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fa  fa-money fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="service-heading">Current Worth</h4>
+                        <p class="text-muted">You own ${{ portfolio.value }} of stock.</p>
+                        <p class="text-muted">You have ${{ portfolio.balance }} left.</p>
+                </div>
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fa fa-line-chart fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="service-heading">Recent Activity</h4>
+                    {% for o in hist %}
+                        <p class="text-muted">{{ o.type }} {{ o.amount }} shares of <a href="/stock/{{ o.stock }}/">{{ o.stock }} </a></p>
+                    {% endfor %}
+                </div>
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fa  fa-university fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="service-heading">Current Portfolio</h4>
+                    {% for pos in portfolio.positions.all %}
+                        <p class="text-muted">{{ pos.amount }} shares of <a href="/stock/{{ pos.stock }}/">{{ pos.stock }}</a> worth ${{ pos.value }}  </p>
+                    {% endfor %}
+                  
+                </div>
+            </div>
+        </div>
+    </section>
+
+<div class="col-xs-12" style="height:50px;"></div>
+
+<script type = "text/javascript" src = "/static/js/jquery.js"></script>
+            <script type = "text/javascript" src = "/static/js/flot/jquery.flot.js"></script>
+            <script type = "text/javascript" src = "/static/js/flot/jquery.flot.time.js"></script>
+            <script type = "text/javascript" src = "/static/js/flot/date.js"></script>
+            <script type = "text/javascript" src = "/static/js/flot/jquery.flot.categories.js"></script>
+
+<div class="row">
+    <p class="tab"><font size=20 color = "black">Your money through time</font></p>
+    <div class="col-md-2 col-md-offset-1">{{chart.as_html}}</div>
+</div>
+
+            
+            
+   
+
+
+    </body>
+    <footer>
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <span class="copyright">Copyright &copy; Adv. Software Engineer</span>
+                </div>
+                <div class="col-md-4">
+                    <ul class="list-inline social-buttons">
+                        <li><a href="#"><i class="fa fa-twitter"></i></a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-facebook"></i></a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul class="list-inline quicklinks">
+                        <li><a href="#">Privacy Policy</a>
+                        </li>
+                        <li><a href="#">Terms of Use</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+</html>
+{% endblock %}  
